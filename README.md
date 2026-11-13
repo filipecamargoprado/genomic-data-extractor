@@ -22,7 +22,7 @@ Na bioinformática contemporânea, o volume de dados biológicos depositados em 
 4. **Consumo Elevado de Memória (`vmmem`):** O acúmulo de cache de página no subsistema Linux e a retenção de dicionários gigantes em Python causam estouro de memória (*Out of Memory* - OOM).
 5. **Explosão Volumétrica e Bloqueio em Nuvem (`Errno 28`):** Gravar a cadeia completa de aminoácidos dentro de um único arquivo CSV sincronizado com o Google Drive gera mais de $2,5\text{ TB}$ de texto e bloqueia o descritor de arquivos.
 
-**Este projeto reduz esses gargalos no ambiente testado** através de uma pipeline evoluída de protótipos exploratórios para uma arquitetura escalável de extração e agrupamento em lote, concluindo o processamento dos 3.893 arquivos selecionados em **~72 horas de processamento efetivo (ao longo de uma semana de execução com pausas e retomadas registradas no `log.txt`)** em um computador pessoal.
+**Este projeto reduz esses gargalos no ambiente testado** através de uma pipeline evoluída de protótipos exploratórios para uma arquitetura escalável de extração e agrupamento em lote, varrendo os 3.893 arquivos selecionados (**3.835 consolidados**) em **~72 horas de processamento efetivo (ao longo de uma semana de execução com pausas e retomadas registradas no `log.txt`)** em um computador pessoal.
 
 ---
 
