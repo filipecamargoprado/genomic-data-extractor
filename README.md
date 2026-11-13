@@ -8,7 +8,7 @@
 
 > **Arquitetura de Engenharia de Dados, Automação e Clusterização de Sequências Genômicas e Proteicas em Larga Escala via NCBI, Python e MMseqs2.**
 
-Este repositório contém o código-fonte, os scripts de automação e a engenharia de dados desenvolvidos como parte do **Trabalho de Conclusão de Curso (TCC)** em Engenharia da Computação / Engenharia de Software da **Universidade Positivo (Curitiba - PR)**.
+Este repositório contém o código-fonte, os scripts de automação e a engenharia de dados desenvolvidos como parte do **Trabalho de Conclusão de Curso (TCC)** em Engenharia de Software da **Universidade Positivo (Curitiba - PR)**.
 
 ---
 
