@@ -22,7 +22,7 @@ Na bioinformática contemporânea, o volume de dados biológicos depositados em 
 4. **Consumo Elevado de Memória (`vmmem`):** O acúmulo de cache de página no subsistema Linux e a retenção de dicionários gigantes em Python causam estouro de memória (*Out of Memory* - OOM).
 5. **Explosão Volumétrica e Bloqueio em Nuvem (`Errno 28`):** Gravar a cadeia completa de aminoácidos dentro de um único arquivo CSV sincronizado com o Google Drive gera mais de $2,5\text{ TB}$ de texto e bloqueia o descritor de arquivos.
 
-**Este projeto reduz esses gargalos no ambiente testado** através de uma pipeline evoluída de protótipos exploratórios para uma arquitetura escalável de extração e agrupamento em lote, concluindo o processamento da base em **72 horas (3 dias)** em um computador pessoal.
+**Este projeto reduz esses gargalos no ambiente testado** através de uma pipeline evoluída de protótipos exploratórios para uma arquitetura escalável de extração e agrupamento em lote, concluindo o processamento dos 3.893 arquivos selecionados em **~72 horas de processamento efetivo (ao longo de uma semana de execução com pausas e retomadas registradas no `log.txt`)** em um computador pessoal.
 
 ---
 
@@ -30,7 +30,7 @@ Na bioinformática contemporânea, o volume de dados biológicos depositados em 
 
 ### 🔹 Prototipagem Inicial (Estudo Preliminar) — Extração via API REST & Conteúdo GC
 Antes da estruturação deste repositório, realizou-se um estudo exploratório voltado à extração pontual de genes específicos (ex.: *Homo sapiens BRCA1*) diretamente do banco `nucleotide` do NCBI utilizando **Biopython (`Bio.Entrez` e `Bio.SeqIO`)**:
-- **Filtro Inteligente RefSeq:** Injeção da diretiva `src db refseq[Properties]` na *query* para ignorar fragmentos genômicos pesados ($\approx 81.000\text{ bp}$) e baixar apenas sequências de referência curadas ($\approx 7.000\text{ bp}$), eliminando *timeouts*.
+- **Filtro Inteligente RefSeq:** Injeção da diretiva `src db refseq[Properties]` na *query* para ignorar fragmentos genômicos pesados ($\approx 81.000\text{ bp}$) e baixar apenas sequências de referência curadas ($\approx 7.000\text{ bp}$), reduzindo *timeouts*.
 - **Stream Parsing em Memória:** Uso de `io.StringIO` e geradores de contexto (`with`) para leitura segura sem geração de lixo em disco.
 - **Cálculo do Conteúdo GC:** Filtragem de sequências com comprimento $> 500\text{ bp}$ e cálculo automático do percentual de Guanina e Citosina como métrica de composição da sequência:
 
@@ -147,7 +147,7 @@ O arquivo consolidado (`base_proteinas_agrupadas_final.csv`) é gerado com o del
 ## 📈 7. Resultados Alcançados e Integração com IA
 
 - **Validação Estatística Inicial:** **11.322 proteínas** processadas e agrupadas em **7.339 *clusters* de similaridade** (redução de $35,18\%$ de redundância com parâmetros $Id \ge 50\%$ e $Cov \ge 80\%$).
-- **Escala Completa de Produção (~72 horas):** **3.893 arquivos `.fsa_aa.gz`** varridos na base bruta do GenBank, resultando em **3.835 lotes íntegros** processados, classificados e mesclados automaticamente (com isolamento de **55 arquivos corrompidos** na extração/compactação e **3 arquivos** que falharam durante a execução do MMseqs2: `gbvrt151`, `gbpat39` e `gbinv970`).
+- **Escala Completa de Produção (~72 horas de processamento efetivo):** **3.893 arquivos `.fsa_aa.gz`** varridos na base bruta do GenBank (ao longo de uma semana de execução com pausas e retomadas registradas no `log.txt`), resultando em **3.835 lotes íntegros** processados, classificados e mesclados automaticamente (com isolamento de **55 arquivos corrompidos** na extração/compactação e **3 arquivos** que falharam durante a execução do MMseqs2: `gbvrt151`, `gbpat39` e `gbinv970`).
 - **Integração com Inteligência Artificial (Etapa Seguinte):** Na etapa de Aprendizado de Máquina do projeto (repositório [`tcc-proteinas-ia`](https://github.com/KatsuMouley/tcc-proteinas-ia)), somente os `.gz` com o CSV de mesmo nome disponível na pasta lida pela v3 formaram par — totalizando **3.428 pares `.gz`/CSV** na base histórica elegível utilizada para geração de *embeddings* proteicos (ESM-2), particionamento por grupo de similaridade (que reduz o risco de vazamento por homologia) e treinamento de redes neurais (MLP), operando exclusivamente sobre registros biológicos públicos, sem identificadores clínicos de pacientes.
 
 ---
